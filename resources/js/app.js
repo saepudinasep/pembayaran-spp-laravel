@@ -1,5 +1,4 @@
 import './bootstrap';
-import 'toastr/build/toastr.min.css';
-import toastr from 'toastr';
+require('toastr/toastr.scss');
+window.toastr = require('toastr');
 
-window.toastr = toastr;

@@ -50,6 +50,12 @@
 
     <!-- Logout Modal-->
     <!-- Tambahkan modal jika diperlukan -->
+    @if (session('status'))
+        <script>
+            toastr.success('{{ session('status') }}');
+        </script>
+    @endif
+
 
     <script src="{{ asset('js/jquery.min.js') }}"></script>
     <script src="{{ asset('js/bootstrap.bundle.min.js') }}"></script>
