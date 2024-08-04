@@ -11,14 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('users', function (Blueprint $table) {
+        Schema::create('webhook_logs', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->string('email')->unique();
-            $table->timestamp('email_verified_at')->nullable();
-            $table->string('username')->unique();
-            $table->string('password');
-            $table->enum('level', ['admin', 'petugas', 'siswa']);
-            $table->rememberToken();
+            $table->string('midtrans_transaction_id');
+            $table->text('payload');
             $table->timestamps();
         });
     }
@@ -28,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('users');
+        Schema::dropIfExists('webhook_logs');
     }
 };
