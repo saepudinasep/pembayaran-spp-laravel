@@ -27,7 +27,7 @@ Route::middleware(['check.user.exists'])->group(function () {
     Route::post('/register/process', [RegisterController::class, 'process'])->name('register.process');
 });
 
-Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
+Route::get('/logout', [LoginController::class, 'logout'])->name('logout');
 Route::get('/password/reset', [PasswordController::class, 'reset'])->name('password.reset');
 Route::post('/password/process', [PasswordController::class, 'process'])->name('password.process');
 

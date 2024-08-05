@@ -27,17 +27,21 @@ class LoginController extends Controller
 
         if (Auth::attempt($credentials, $request->remember)) {
             // Jika berhasil login, redirect ke halaman dashboard
-            return redirect()->intended('/dashboard');
+            return redirect()->intended('/dashboard')->with('status', 'Login successful!');
         }
 
         // Jika gagal login, kembalikan ke halaman login dengan pesan error
         return redirect()->back()
             ->withErrors([
                 'username' => 'The provided credentials do not match our records.',
-            ]);
+            ])
+            ->withInput()
+            ->with('error', 'Login failed. Please check your credentials and try again.');
     }
 
     public function logout()
     {
+        Auth::logout();
+        return redirect('/login')->with('status', 'Anda telah keluar.');
     }
 }

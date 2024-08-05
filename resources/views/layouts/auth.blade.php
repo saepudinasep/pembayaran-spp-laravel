@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title> {Title} | Pembayaran SPP</title>
+    <title>@yield('title') | Pembayaran SPP</title>
     <!-- Custom fonts for this template-->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <link
@@ -43,7 +43,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.min.js"></script>
     <script src="{{ asset('js/sb-admin-2.min.js') }}"></script>
-    <script>
+    @yield('scripts')
+    {{-- <script>
         @if (session('status'))
             toastr.options = {
                 "closeButton": true,
@@ -65,7 +66,7 @@
             };
             toastr.success("{{ session('status') }}");
         @endif
-    </script>
+    </script> --}}
 
 </body>
 

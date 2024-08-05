@@ -1,5 +1,7 @@
 @extends('layouts.auth')
 
+@section('title', 'Login')
+
 @section('content')
     <div class="row">
         <div class="col-lg-6 d-none d-lg-block bg-login-image"></div>
@@ -14,7 +16,8 @@
                     <div class="form-group">
                         <input type="username" id="username" name="username"
                             class="form-control form-control-user @error('username') is-invalid @enderror"
-                            placeholder="Enter Username..." value="{{ old('username') }}" required autofocus>
+                            placeholder="Enter Username..." value="{{ old('username') }}" required autofocus
+                            autocomplete="off">
 
                         @error('username')
                             <span class="invalid-feedback" role="alert">
@@ -26,7 +29,7 @@
                     <div class="form-group">
                         <input type="password" id="password" name="password"
                             class="form-control form-control-user @error('password') is-invalid @enderror"
-                            placeholder="Password" required>
+                            placeholder="Password" required autocomplete="off">
 
                         @error('password')
                             <span class="invalid-feedback" role="alert">
@@ -61,9 +64,19 @@
         </div>
     </div>
 
+
+@endsection
+
+@section('scripts')
     @if (session('status'))
         <script>
             toastr.success('{{ session('status') }}');
+        </script>
+    @endif
+
+    @if (session('error'))
+        <script>
+            toastr.error('{{ session('error') }}');
         </script>
     @endif
 
