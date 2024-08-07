@@ -1,10 +1,14 @@
 <?php
 
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\PasswordController;
 use App\Http\Controllers\RegisterController;
+use App\Http\Controllers\SppController;
+use App\Http\Controllers\StaffController;
+use App\Http\Controllers\StudentController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -35,5 +39,23 @@ Route::post('/password/process', [PasswordController::class, 'process'])->name('
 // });
 
 Route::middleware(['auth'])->group(function () {
+    // Dashboard
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard.index');
+
+    // Data Master SPP
+    Route::get('/spp', [SppController::class, 'index'])->name('spp.index');
+    Route::get('/spp/add', [SppController::class, 'add'])->name('spp.add');
+    Route::post('/spp/add', [SppController::class, 'process'])->name('spp.process');
+    Route::get('/spp/update/{id}', [SppController::class, 'update'])->name('spp.update');
+    Route::post('/spp/edit/{id}', [SppController::class, 'edit'])->name('spp.edit');
+    Route::delete('/spp/destroy/{id}', [SppController::class, 'destroy'])->name('spp.destroy');
+
+    // Data Master Admin
+    Route::get('/admin', [AdminController::class, 'index'])->name('admin.index');
+
+    // Data Master Staff
+    Route::get('/staff', [StaffController::class, 'index'])->name('staff.index');
+
+    // Data Master Student
+    Route::get('/student', [StudentController::class, 'index'])->name('student.index');
 });
