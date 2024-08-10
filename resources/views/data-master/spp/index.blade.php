@@ -41,10 +41,10 @@
                                 <td>{{ number_format($item->nominal, 0, ',', '.') }}</td>
                                 <td>
                                     <a href="#" class="btn btn-warning" data-toggle="modal" data-target="#sppModal"
-                                        data-action="{{ route('spp.update', $item->id) }}" data-method="POST"
+                                        data-action="{{ route('spp.update', $item->id) }}" data-method="PUT"
                                         data-title="Update Data SPP" data-tahun="{{ $item->tahun }}"
                                         data-nominal="{{ $item->nominal }}">
-                                        <i class="fas fa-edit"></i> Update
+                                        <i class="fas fa-edit"></i>
                                     </a>
                                     <form id="deleteForm-{{ $item->id }}" action="{{ route('spp.destroy', $item->id) }}"
                                         method="POST" style="display:inline;">

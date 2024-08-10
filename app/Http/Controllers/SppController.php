@@ -35,6 +35,22 @@ class SppController extends Controller
         return redirect()->route('spp.index')->with('status', 'Data SPP successfully added!');
     }
 
+    public function update(Request $request, $id)
+    {
+        $request->validate([
+            'tahun' => 'required|integer',
+            'nominal' => 'required|string',
+        ]);
+
+        $spp = Spp::findOrFail($id);
+        $spp->update([
+            'tahun' => $request->tahun,
+            'nominal' => str_replace('.', '', $request->nominal), // Menghapus titik dari nominal sebelum menyimpan
+        ]);
+
+        return redirect()->route('spp.index')->with('status', 'Data SPP successfully updated!');
+    }
+
     public function destroy($id)
     {
         try {
