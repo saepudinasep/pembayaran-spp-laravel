@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use App\Models\Spp;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use App\Exports\SppExport;
+use Maatwebsite\Excel\Facades\Excel;
+use Carbon\Carbon;
 
 class SppController extends Controller
 {
@@ -64,5 +67,16 @@ class SppController extends Controller
             // Set notifikasi error di sesi jika terjadi kesalahan
             return redirect()->back()->with('error', 'Gagal menghapus data SPP.');
         }
+    }
+
+    public function export()
+    {
+        // Mengambil tanggal saat ini dengan format 'Y-m-d'
+        $date = Carbon::now()->format('Y-m-d');
+
+        // Nama file yang akan diekspor
+        $fileName = 'Data-spp-' . $date . '.xlsx';
+
+        return Excel::download(new SppExport, $fileName);
     }
 }

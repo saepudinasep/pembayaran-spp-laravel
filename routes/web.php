@@ -45,10 +45,9 @@ Route::middleware(['auth'])->group(function () {
     // Data Master SPP
     Route::get('/spp', [SppController::class, 'index'])->name('spp.index');
     Route::post('/spp/add', [SppController::class, 'store'])->name('spp.add');
-    // Route::post('/spp/add', [SppController::class, 'process'])->name('spp.process');
-    // Route::get('/spp/edit/{id}', [SppController::class, 'edit'])->name('spp.edit');
     Route::put('/spp/update/{id}', [SppController::class, 'update'])->name('spp.update');
     Route::delete('/spp/destroy/{id}', [SppController::class, 'destroy'])->name('spp.destroy');
+    Route::get('/spp/export', [SppController::class, 'export'])->name('spp.export');
 
     // Data Master Admin
     Route::get('/admin', [AdminController::class, 'index'])->name('admin.index');
