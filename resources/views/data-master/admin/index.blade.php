@@ -202,15 +202,8 @@
                 cancelButtonText: 'Cancel'
             }).then((result) => {
                 if (result.isConfirmed) {
+                    // Submit form delete
                     document.getElementById('deleteForm-' + id).submit();
-                    // Optionally, you can add a delay before showing the toastr notification
-                    setTimeout(function() {
-                        toastr.success('Data Admin berhasil dihapus!', 'Success', {
-                            closeButton: true,
-                            progressBar: true,
-                            timeOut: 5000
-                        });
-                    }, 1000); // Delay to allow form submission to complete
                 }
             });
         }

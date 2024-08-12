@@ -17,7 +17,7 @@ class AdminController extends Controller
 {
     public function index()
     {
-        $admin = Admin::orderBy('nama', 'desc')->paginate(10);
+        $admin = Admin::orderBy('nama', 'asc')->paginate(10);
         return view('data-master.admin.index', compact('admin'));
     }
 

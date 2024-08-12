@@ -58,6 +58,10 @@ Route::middleware(['auth'])->group(function () {
 
     // Data Master Staff
     Route::get('/staff', [StaffController::class, 'index'])->name('staff.index');
+    Route::post('/staff/store', [StaffController::class, 'store'])->name('staff.store');
+    Route::put('/staff/update/{id}', [StaffController::class, 'update'])->name('staff.update');
+    Route::delete('/staff/destroy/{id}', [StaffController::class, 'destroy'])->name('staff.destroy');
+    Route::get('/staff/export', [StaffController::class, 'export'])->name('staff.export');
 
     // Data Master Student
     Route::get('/student', [StudentController::class, 'index'])->name('student.index');

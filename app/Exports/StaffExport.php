@@ -2,23 +2,23 @@
 
 namespace App\Exports;
 
-use App\Models\Admin;
+use App\Models\Staff;
 use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\WithHeadings;
 
-class AdminExport implements FromCollection, WithHeadings
+class StaffExport implements FromCollection, WithHeadings
 {
     /**
      * @return \Illuminate\Support\Collection
      */
     public function collection()
     {
-        return Admin::with('user')->orderBy('nama', 'asc')->get()->map(function ($admin, $key) {
+        return Staff::with('user')->orderBy('nama', 'asc')->get()->map(function ($staff, $key) {
             return [
                 'No' => $key + 1,
-                'Nama' => $admin->nama,
-                'Email' => $admin->user->email,
-                'Username' => $admin->user->username,
+                'Nama' => $staff->nama,
+                'Email' => $staff->user->email,
+                'Username' => $staff->user->username,
             ];
         });
     }
