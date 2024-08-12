@@ -11,6 +11,7 @@ use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Hash;
 use Maatwebsite\Excel\Facades\Excel;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
 
 class AdminController extends Controller
 {
@@ -32,21 +33,31 @@ class AdminController extends Controller
             return redirect()->back()->withErrors($validator)->withInput();
         }
 
-        $user = new User();
-        $user->id = (string) Str::uuid();
-        $user->email = $request->email;
-        $user->username = $request->username;
-        $user->password = Hash::make($request->username);
-        $user->level = 'admin';
-        $user->save();
+        DB::beginTransaction();
 
-        $admin = new Admin();
-        $admin->id = (string) Str::uuid();
-        $admin->user_id = $user->id;
-        $admin->nama = $request->nama;
-        $admin->save();
+        try {
+            $user = new User();
+            $user->id = (string) Str::uuid();
+            $user->email = $request->email;
+            $user->username = $request->username;
+            $user->password = Hash::make($request->username);
+            $user->level = 'admin';
+            $user->save();
 
-        return redirect()->route('admin.index')->with('status', 'Data Admin successfully added!');
+            $admin = new Admin();
+            $admin->id = (string) Str::uuid();
+            $admin->user_id = $user->id;
+            $admin->nama = $request->nama;
+            $admin->save();
+
+            DB::commit();  // Commit the transaction if everything goes well
+
+            return redirect()->route('admin.index')->with('status', 'Data Admin successfully added!');
+        } catch (\Exception $e) {
+            DB::rollBack();  // Rollback the transaction if any query fails
+
+            return redirect()->back()->withErrors(['error' => 'An error occurred while saving data.'])->withInput();
+        }
     }
 
     public function update(Request $request, $id)
@@ -64,28 +75,55 @@ class AdminController extends Controller
             return redirect()->back()->withErrors($validator)->withInput();
         }
 
-        $user->email = $request->email;
-        $user->username = $request->username;
-        if ($request->filled('password')) {
-            $user->password = Hash::make($request->password);
+        // Mulai transaction
+        DB::beginTransaction();
+
+        try {
+            $user->email = $request->email;
+            $user->username = $request->username;
+            if ($request->filled('password')) {
+                $user->password = Hash::make($request->password);
+            }
+            $user->save();
+
+            $admin->nama = $request->nama;
+            $admin->save();
+
+            // Commit transaction jika semua query berhasil
+            DB::commit();
+
+            return redirect()->route('admin.index')->with('status', 'Data Admin successfully updated!');
+        } catch (\Exception $e) {
+            // Rollback transaction jika terjadi error
+            DB::rollBack();
+            return redirect()->back()->withErrors(['error' => 'Failed to update data.'])->withInput();
         }
-        $user->save();
-
-        $admin->nama = $request->nama;
-        $admin->save();
-
-        return redirect()->route('admin.index')->with('status', 'Data Admin successfully updated!');
     }
 
     public function destroy($id)
     {
-        $admin = Admin::findOrFail($id);
-        $user = $admin->user;
+        // Mulai transaction
+        DB::beginTransaction();
 
-        $admin->delete();
-        $user->delete();
+        try {
+            $admin = Admin::findOrFail($id);
+            $user = $admin->user;
 
-        return redirect()->route('admin.index')->with('status', 'Data Admin successfully deleted!');
+            // Hapus data admin terlebih dahulu
+            $admin->delete();
+
+            // Kemudian hapus data user yang terkait
+            $user->delete();
+
+            // Commit transaction jika semua operasi berhasil
+            DB::commit();
+
+            return redirect()->route('admin.index')->with('status', 'Data Admin successfully deleted!');
+        } catch (\Exception $e) {
+            // Rollback transaction jika terjadi error
+            DB::rollBack();
+            return redirect()->route('admin.index')->withErrors(['error' => 'Failed to delete data.']);
+        }
     }
 
     public function export()
