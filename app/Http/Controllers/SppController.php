@@ -13,11 +13,11 @@ class SppController extends Controller
 {
     public function index()
     {
-        $spp = Spp::all();
+        $spp = Spp::orderBy('tahun', 'desc')->paginate(10);
         return view('data-master.spp.index', compact('spp'));
     }
 
-    public function add(Request $request)
+    public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
             'tahun' => 'required|integer|min:1900|max:' . date('Y'),

@@ -11,7 +11,7 @@
                 <i class="fas fa-download fa-sm text-white-50"></i> Export Excel
             </a>
             <a href="#" class="btn btn-primary" data-toggle="modal" data-target="#sppModal"
-                data-action="{{ route('spp.add') }}" data-method="POST" data-title="Add Data SPP">
+                data-action="{{ route('spp.store') }}" data-method="POST" data-title="Add Data SPP">
                 <i class="fas fa-plus"></i> Add Data
             </a>
         </div>
@@ -36,7 +36,7 @@
                     <tbody>
                         @foreach ($spp as $item)
                             <tr>
-                                <td>{{ $loop->iteration }}</td>
+                                <td>{{ $loop->iteration + ($spp->currentPage() - 1) * $spp->perPage() }}</td>
                                 <td>{{ $item->tahun }}</td>
                                 <td>{{ number_format($item->nominal, 0, ',', '.') }}</td>
                                 <td>
@@ -61,8 +61,29 @@
                     </tbody>
                 </table>
             </div>
+
+            <!-- Pagination Links -->
+            <nav aria-label="Page navigation example">
+                <ul class="pagination justify-content-center">
+                    <!-- Previous Page Link -->
+                    <li class="page-item {{ $spp->onFirstPage() ? 'disabled' : '' }}">
+                        <a class="page-link" href="{{ $spp->previousPageUrl() }}">Previous</a>
+                    </li>
+                    <!-- Pagination Links -->
+                    @for ($i = 1; $i <= $spp->lastPage(); $i++)
+                        <li class="page-item {{ $spp->currentPage() == $i ? 'active' : '' }}">
+                            <a class="page-link" href="{{ $spp->url($i) }}">{{ $i }}</a>
+                        </li>
+                    @endfor
+                    <!-- Next Page Link -->
+                    <li class="page-item {{ $spp->hasMorePages() ? '' : 'disabled' }}">
+                        <a class="page-link" href="{{ $spp->nextPageUrl() }}">Next</a>
+                    </li>
+                </ul>
+            </nav>
         </div>
     </div>
+
 
 
     <!-- Modal -->
