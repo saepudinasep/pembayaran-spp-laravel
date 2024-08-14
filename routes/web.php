@@ -6,6 +6,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\PasswordController;
 use App\Http\Controllers\RegisterController;
+use App\Http\Controllers\SchoolClassController;
 use App\Http\Controllers\SppController;
 use App\Http\Controllers\StaffController;
 use App\Http\Controllers\StudentController;
@@ -62,6 +63,13 @@ Route::middleware(['auth'])->group(function () {
     Route::put('/staff/update/{id}', [StaffController::class, 'update'])->name('staff.update');
     Route::delete('/staff/destroy/{id}', [StaffController::class, 'destroy'])->name('staff.destroy');
     Route::get('/staff/export', [StaffController::class, 'export'])->name('staff.export');
+
+    // Data Master School Class
+    Route::get('/kelas', [SchoolClassController::class, 'index'])->name('kelas.index');
+    Route::post('/kelas/store', [SchoolClassController::class, 'store'])->name('kelas.store');
+    Route::put('/kelas/update/{id}', [SchoolClassController::class, 'update'])->name('kelas.update');
+    Route::delete('/kelas/destroy/{id}', [SchoolClassController::class, 'destroy'])->name('kelas.destroy');
+    Route::get('/kelas/export', [SchoolClassController::class, 'export'])->name('kelas.export');
 
     // Data Master Student
     Route::get('/student', [StudentController::class, 'index'])->name('student.index');

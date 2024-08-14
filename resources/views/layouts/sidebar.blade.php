@@ -21,13 +21,13 @@
             Interface
         </div>
         <!-- Nav Item - Pages Collapse Menu -->
-        <li class="nav-item @if (Route::is('spp.index', 'admin.index', 'staff.index', 'student.index')) active @endif">
+        <li class="nav-item @if (Route::is('spp.index', 'admin.index', 'staff.index', 'kelas.index', 'student.index')) active @endif">
             <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
                 aria-expanded="true" aria-controls="collapseTwo">
                 <i class="fas fa-database"></i>
                 <span>Master Data</span>
             </a>
-            <div id="collapseTwo" class="collapse @if (Route::is('spp.index', 'admin.index', 'staff.index', 'student.index')) show @endif"
+            <div id="collapseTwo" class="collapse @if (Route::is('spp.index', 'admin.index', 'staff.index', 'kelas.index', 'student.index')) show @endif"
                 aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                 <div class="bg-white py-2 collapse-inner rounded">
                     <h6 class="collapse-header">master data</h6>
@@ -37,6 +37,8 @@
                         href="{{ route('admin.index') }}">Admin</a>
                     <a class="collapse-item @if (Route::currentRouteName() == 'staff.index') active @endif"
                         href="{{ route('staff.index') }}">Staff</a>
+                    <a class="collapse-item @if (Route::currentRouteName() == 'kelas.index') active @endif"
+                        href="{{ route('kelas.index') }}">Class</a>
                     <a class="collapse-item @if (Route::currentRouteName() == 'student.index') active @endif"
                         href="{{ route('student.index') }}">Student</a>
                 </div>
